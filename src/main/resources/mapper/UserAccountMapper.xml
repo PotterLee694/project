@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.ly.project.mapper.UserAccountMapper">
+    <select id="check" resultType="java.lang.Integer">
+        select count(1) from tbl_user_account
+        where action in (0,1)
+        and stuNo = #{stuNo} and password = #{password}
+    </select>
+
+</mapper>
