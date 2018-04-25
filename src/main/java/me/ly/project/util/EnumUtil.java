@@ -1,4 +1,4 @@
-package me.ly.project.Enum;
+package me.ly.project.util;
 
 import java.lang.reflect.InvocationTargetException;
 
