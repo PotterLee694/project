@@ -1,8 +1,7 @@
 package me.ly.project.controller;
 
 import lombok.Data;
-import me.ly.project.Enum.UserType;
-import me.ly.project.model.ModelBase;
+import me.ly.project.model.BaseRes;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public interface TestCon {
     @RequestMapping("/testCon")
-    ModelBase testCon(TestConReq testConReq);
+    BaseRes testCon(TestConReq testConReq);
 
     @Data
     class TestConReq {

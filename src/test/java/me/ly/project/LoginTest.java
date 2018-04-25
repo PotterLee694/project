@@ -21,8 +21,8 @@ public class LoginTest {
     @Test
     public void loginTest() {
         Login.LoginReq loginReq = new Login.LoginReq();
-        loginReq.setStuNo(2014133019L);
-        loginReq.setPassword("123456");
+        loginReq.setStuNo(2014133009L);
+        loginReq.setPassword("123456789");
 
         Login.LoginRes loginRes = this.login.login(loginReq);
 

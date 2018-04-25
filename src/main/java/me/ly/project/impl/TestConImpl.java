@@ -3,7 +3,7 @@ package me.ly.project.impl;
 import me.ly.project.util.EnumUtil;
 import me.ly.project.Enum.UserType;
 import me.ly.project.controller.TestCon;
-import me.ly.project.model.ModelBase;
+import me.ly.project.model.BaseRes;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class TestConImpl implements TestCon{
     @Override
-    public ModelBase testCon(TestConReq testConReq) {
-        return new ModelBase().setContent("id:" + testConReq.getId() + ", name:" + testConReq.getName()
+    public BaseRes testCon(TestConReq testConReq) {
+        return new BaseRes().setContent("id:" + testConReq.getId() + ", name:" + testConReq.getName()
                                                   + ", userType:" + EnumUtil.getEnum(UserType.class, testConReq.getUserType()));
     }
 

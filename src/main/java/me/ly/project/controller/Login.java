@@ -1,7 +1,7 @@
 package me.ly.project.controller;
 
 import lombok.Data;
-import me.ly.project.model.ModelBase;
+import me.ly.project.model.BaseRes;
 import me.ly.project.model.UserModel;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +17,7 @@ public interface Login {
     @PostMapping("/login")
     LoginRes login(LoginReq loginReq);
     @RequestMapping("/loginOut")
-    ModelBase loginOut(LoginOutReq loginOutReq);
+    BaseRes loginOut(LoginOutReq loginOutReq);
 
     @Data
     class LoginReq {
@@ -25,7 +25,7 @@ public interface Login {
         private String password;
     }
     @Data
-    class LoginRes {
+    class LoginRes extends BaseRes {
         private UserModel user;
     }
     @Data
