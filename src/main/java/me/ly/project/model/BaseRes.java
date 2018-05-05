@@ -1,5 +1,7 @@
 package me.ly.project.model;
 
+import me.ly.project.Enum.AppError;
+
 /**
  * @author LiYan
  * @date 2018/4/25 11:52
@@ -40,6 +42,17 @@ public class BaseRes {
     public BaseRes setBaseRes(String code, String message) {
         this.code = code;
         this.message = message;
+        return this;
+    }
+
+    /**
+     * 设置基本返回信息
+     * @param appError 错误信息
+     * @return
+     */
+    public BaseRes setBaseRes(AppError appError) {
+        this.code = appError.getCode();
+        this.message = appError.getMsg();
         return this;
     }
      public String getContent() {
