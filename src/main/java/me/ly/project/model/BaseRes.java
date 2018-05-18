@@ -12,6 +12,7 @@ public class BaseRes {
     private String code = SUCCESS;
     private String message = "";
     private String content = "";
+    private Boolean success = true;
 
 
 
@@ -33,6 +34,15 @@ public class BaseRes {
         return this;
     }
 
+    public Boolean getSuccess() {
+        return success;
+    }
+
+    public BaseRes setSuccess(Boolean success) {
+        this.success = success;
+        return this;
+    }
+
     /**
      * 设置基本返回信息
      * @param code 默认"0000" 为成功
@@ -42,6 +52,9 @@ public class BaseRes {
     public BaseRes setBaseRes(String code, String message) {
         this.code = code;
         this.message = message;
+        if (!"0000".equals(code)) {
+            this.success = false;
+        }
         return this;
     }
 
@@ -53,6 +66,9 @@ public class BaseRes {
     public BaseRes setBaseRes(AppError appError) {
         this.code = appError.getCode();
         this.message = appError.getMsg();
+        if (!"0000".equals(this.code)) {
+            this.success = false;
+        }
         return this;
     }
      public String getContent() {

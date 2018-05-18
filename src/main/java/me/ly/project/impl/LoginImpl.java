@@ -24,7 +24,7 @@ public class LoginImpl implements Login {
     @Override
     public LoginRes login(LoginReq loginReq) {
         LoginRes loginRes = new LoginRes();
-        log
+        log.info("req : {}",loginReq);
 
         int count = userAccountMapper.check(loginReq.getStuNo(), loginReq.getPassword());
         if (count < 1) {
@@ -38,6 +38,7 @@ public class LoginImpl implements Login {
     @Override
     public BaseRes loginOut(LoginOutReq loginOutReq) {
         BaseRes baseRes = new BaseRes();
+        log.info("req : {}",loginOutReq);
         baseRes.setBaseRes(AppError.SUCCESS);
         return baseRes;
     }
