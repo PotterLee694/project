@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.ly.project.mapper.TemplateMapper">
+
+    <insert id="insert" parameterType="me.ly.project.model.TemplateModel">
+        <selectKey order="AFTER" resultType="java.lang.Long" keyProperty="id" >
+            select last_insert_id() as id from tbl_template limit 1
+        </selectKey>
+        insert into tb_template(
+        <if test="template != null">template,</if>
+        <if test="owner != null">owner,</if>
+        <if test="title != null">title,</if>
+        createStamp
+        ) values (
+        <if test="template != null">#{template},</if>
+        <if test="owner != null">#{owner},</if>
+        <if test="title != null">#{title},</if>
+        now()
+        )
+    </insert>
+
+    <select id="queryTemplates" resultType="me.ly.project.model.TemplateModel" parameterType="me.ly.project.model.Page">
+        select id, owner, title, template
+        from tb_template
+        <trim prefix="WHERE" suffixOverrides="AND | OR">
+            <if test="userID != null">owner = #{userID}</if>
+            <if test="title != null">title = #{title}</if>
+        </trim>
+        <if test="page.order != null"> order by ${page.order}</if>
+        <if test="page.desc">desc</if>
+        <if test="page.offset != null and page.pageSize != null">
+            limit #{page.offset}, #{page.pageSize}
+        </if>
+    </select>
+
+</mapper>

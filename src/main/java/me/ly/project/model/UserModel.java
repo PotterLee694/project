@@ -1,9 +1,14 @@
 package me.ly.project.model;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
+
 /**
  * @author LiYan
  * @date 2018/4/24 0:16
  */
+@Data
+@Accessors(chain = true)
 public class UserModel {
     private Long id;
     private Long stuNo;
@@ -44,5 +49,15 @@ public class UserModel {
     public UserModel setUserName(String userName) {
         this.userName = userName;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "UserModel{" +
+                "id=" + id +
+                ", stuNo=" + stuNo +
+                ", userType=" + userType +
+                ", userName='" + userName + '\'' +
+                '}';
     }
 }

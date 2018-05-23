@@ -1,6 +1,9 @@
 package me.ly.project.controller;
 
 import lombok.Data;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.Accessors;
 import me.ly.project.model.BaseRes;
 import me.ly.project.model.UserModel;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,15 +23,19 @@ public interface Login {
     BaseRes loginOut(LoginOutReq loginOutReq);
 
     @Data
+    @Accessors(chain = true)
     class LoginReq {
         private Long stuNo;
         private String password;
     }
     @Data
+    @Accessors(chain = true)
+    @ToString(callSuper = true)
     class LoginRes extends BaseRes {
         private UserModel user;
     }
     @Data
+    @Accessors(chain = true)
     class LoginOutReq {
         private int id;
     }

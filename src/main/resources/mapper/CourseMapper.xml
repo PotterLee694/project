@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.ly.project.mapper.CourseMapper">
+
+    <insert id="insert" parameterType="me.ly.project.model.CourseModel">
+        <selectKey order="AFTER" resultType="java.lang.Long" keyProperty="id" >
+            select last_insert_id() as id from tbl_course limit 1
+        </selectKey>
+        insert into tb_course(
+        <if test="owner != null">owner,</if>
+        <if test="title != null">title,</if>
+        <if test="description != null">description,</if>
+        <if test="teachers != null">teachers,</if>
+        <if test="courseTime != null">courseTime,</if>
+        createStamp
+        ) values (
+        <if test="owner!= null">#{owner},</if>
+        <if test="title != null">#{title},</if>
+        <if test="description != null">#{description},</if>
+        <if test="courseTime != null">#{courseTime},</if>
+        now()
+        )
+    </insert>
+    <select id="queryCourses" resultType="me.ly.project.model.CourseModel" parameterType="me.ly.project.model.Page">
+        select id, owner, title, description, teachers, courseTime
+        from tb_course
+        <if test="userID != null">where owner = #{userID}</if>
+        <if test="page.order != null and page.order"> order by ${page.order}</if>
+        <if test="page.desc">desc</if>
+        <if test="page.offset != null and page.pageSize != null">
+            limit #{page.offset}, #{page.pageSize}
+        </if>
+    </select>
+    <select id="queryCourseCount" resultType="java.lang.Integer">
+        select count(1)
+        from tb_course
+        <if test="userID != null">where owner = #{userID}</if>
+    </select>
+
+</mapper>

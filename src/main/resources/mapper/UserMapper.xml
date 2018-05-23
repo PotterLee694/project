@@ -18,6 +18,17 @@
             0, now()
         )
     </insert>
+    <update id="updateBy">
+        update tbl_user (
+        <if test="userType != null">userType={userType},</if>
+        <if test="userName != null">userName={userName},</if>
+        action = 1
+        )
+        <trim prefix="WHERE" suffixOverrides="OR | AND">
+            <if test="id != null">id={id} OR</if>
+            <if test="stuNo != null">stuNo={stuNo} OR</if>
+        </trim>
+    </update>
 
     <select id="queryByStuNo" resultType="me.ly.project.model.UserModel">
         select id,stuNo,userType,userName
