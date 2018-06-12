@@ -15,6 +15,9 @@ public class Page {
     private String order;
     private Boolean desc;
 
+    private String searchType;
+    private String searchContent;
+
     public Page setTotalCount(int totalCount) {
         this.totalCount = totalCount;
         this.pageCount = totalCount / this.pageSize;

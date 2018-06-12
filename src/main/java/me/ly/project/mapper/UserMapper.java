@@ -15,6 +15,8 @@ public interface UserMapper {
     int insert(UserModel userModel);
     UserModel queryByStuNo(@Param("stuNo") Long sutNo);
 
+    UserModel queryById(@Param("id") Long id);
+
     int updateBy(Map<String, Object> params);
 
 }

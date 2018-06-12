@@ -4,7 +4,7 @@
 
     <insert id="insert" parameterType="me.ly.project.model.CourseModel">
         <selectKey order="AFTER" resultType="java.lang.Long" keyProperty="id" >
-            select last_insert_id() as id from tbl_course limit 1
+            select last_insert_id() as id from tb_course limit 1
         </selectKey>
         insert into tb_course(
         <if test="owner != null">owner,</if>
@@ -12,19 +12,46 @@
         <if test="description != null">description,</if>
         <if test="teachers != null">teachers,</if>
         <if test="courseTime != null">courseTime,</if>
+        <if test="infoPdf != null">infoPdf,</if>
+        <if test="prePdf != null">prePdf,</if>
+        <if test="preVideo != null">preVideo,</if>
         createStamp
         ) values (
         <if test="owner!= null">#{owner},</if>
         <if test="title != null">#{title},</if>
         <if test="description != null">#{description},</if>
+        <if test="teachers != null">#{teachers},</if>
         <if test="courseTime != null">#{courseTime},</if>
+        <if test="infoPdf != null">#{infoPdf},</if>
+        <if test="prePdf != null">#{prePdf},</if>
+        <if test="preVideo != null">#{preVideo},</if>
         now()
         )
     </insert>
+    <update id="update">
+        update tb_course set
+        <if test="owner != null">owner=#{owner},</if>
+        <if test="title != null">title=#{title},</if>
+        <if test="description != null">description=#{description},</if>
+        <if test="teachers != null">teachers=#{teachers},</if>
+        <if test="courseTime != null">courseTime=#{courseTime},</if>
+        <if test="courseOver != null">courseOver=#{courseOver},</if>
+        <if test="infoPdf != null">infoPdf=#{infoPdf},</if>
+        <if test="prePdf != null">prePdf=#{prePdf},</if>
+        <if test="preVideo != null">preVideo=#{preVideo}</if>
+        where
+        id = #{id}
+    </update>
+    <delete id="delete">
+        delete from tb_course
+        where id = #{id}
+    </delete>
     <select id="queryCourses" resultType="me.ly.project.model.CourseModel" parameterType="me.ly.project.model.Page">
-        select id, owner, title, description, teachers, courseTime
+        select id, owner, title, description, teachers, courseTime, courseOver, infoPdf, prePdf, preVideo
         from tb_course
-        <if test="userID != null">where owner = #{userID}</if>
+        <if test="page.searchType != null and page.searchType != '' and page.searchContent != null">
+            where ${page.searchType} like concat('%', #{page.searchContent}, '%')
+        </if>
         <if test="page.order != null and page.order"> order by ${page.order}</if>
         <if test="page.desc">desc</if>
         <if test="page.offset != null and page.pageSize != null">
@@ -34,7 +61,14 @@
     <select id="queryCourseCount" resultType="java.lang.Integer">
         select count(1)
         from tb_course
-        <if test="userID != null">where owner = #{userID}</if>
+        <if test="page.searchType != null and page.searchType != '' and page.searchContent != null">
+            where ${page.searchType} like concat('%', #{page.searchContent}, '%')
+        </if>
+    </select>
+    <select id="getCourse" resultType="me.ly.project.model.CourseModel">
+        select id, owner, title, description, teachers, courseTime, courseOver, infoPdf, prePdf, preVideo
+        from tb_course
+        where id = #{id}
     </select>
 
 </mapper>

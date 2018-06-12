@@ -18,23 +18,28 @@
             0, now()
         )
     </insert>
-    <update id="updateBy">
-        update tbl_user (
-        <if test="userType != null">userType={userType},</if>
-        <if test="userName != null">userName={userName},</if>
+    <update id="updateBy" parameterType="java.util.Map">
+        update tbl_user set
+        <if test="userType != null">userType=#{userType},</if>
+        <if test="userName != null">userName=#{userName},</if>
+        <if test="iconUrl != null">iconUrl=#{iconUrl},</if>
         action = 1
-        )
-        <trim prefix="WHERE" suffixOverrides="OR | AND">
-            <if test="id != null">id={id} OR</if>
-            <if test="stuNo != null">stuNo={stuNo} OR</if>
-        </trim>
+        where
+        action in (0,1)
+        and id = #{id}
     </update>
 
     <select id="queryByStuNo" resultType="me.ly.project.model.UserModel">
-        select id,stuNo,userType,userName
+        select id,stuNo,userType,userName,iconUrl
         from tbl_user
         where action in (0,1)
         and stuNo = #{stuNo}
+    </select>
+    <select id="queryById" resultType="me.ly.project.model.UserModel">
+        select id,stuNo,userType,userName,iconUrl
+        from tbl_user
+        where action in (0,1)
+        and id = #{id}
     </select>
 
 </mapper>

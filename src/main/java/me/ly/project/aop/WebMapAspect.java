@@ -68,11 +68,6 @@ public class WebMapAspect {
 
     private String getBody(HttpServletRequest request) throws IOException {
         BufferedReader reader = request.getReader();
-        if (reader.markSupported()) {
-            reader.reset();
-        } else {
-            reader.mark(0);
-        }
         StringBuffer body = new StringBuffer();
         String input;
         while ((input = reader.readLine()) != null) {

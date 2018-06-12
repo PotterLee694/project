@@ -10,7 +10,15 @@ import java.util.List;
 @Mapper
 public interface CourseMapper {
     int insert(CourseModel courseModel);
+
+    int delete(@Param("id") Long id);
+
     List<CourseModel> queryCourses(@Param("userID") Long userID, @Param("page") Page page);
 
-    int queryCourseCount(@Param("userID") Long userID);
+
+    CourseModel getCourse(@Param("id") Long id);
+
+    int queryCourseCount(@Param("page") Page page);
+
+    int update(CourseModel courseModel);
 }

@@ -7,11 +7,8 @@ package me.ly.project.Enum;
 public enum AppError {
 
     LOGIN_FAILED("0001", "登录失败，学号或密码错误"),
-
-
-
-
-
+    STUNO_ERROR("0002", "登录失败，无效的学号"),
+    UPDATE_ERROR("0003", "修改失败"),
 
 
 

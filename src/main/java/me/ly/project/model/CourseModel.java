@@ -12,4 +12,10 @@ public class CourseModel {
     private String description;
     private String teachers;
     private String courseTime;
+    private Boolean courseOver;
+
+    private String infoPdf;
+    private String prePdf;
+    private String preVideo;
+    private Boolean liked;
 }

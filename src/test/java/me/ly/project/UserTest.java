@@ -1,8 +1,8 @@
 package me.ly.project;
 
 import com.google.gson.Gson;
-import me.ly.project.controller.Login;
-import me.ly.project.impl.LoginImpl;
+import me.ly.project.controller.User;
+import me.ly.project.impl.UserImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,16 +15,16 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class LoginTest {
+public class UserTest {
     @Autowired
-    private LoginImpl login;
+    private UserImpl login;
     @Test
     public void loginTest() {
-        Login.LoginReq loginReq = new Login.LoginReq();
-        loginReq.setStuNo(2014133009L);
-        loginReq.setPassword("123456789");
+        User.LoginReq loginReq = new User.LoginReq();
+        loginReq.setStuNo("123");
+        loginReq.setPassword("123");
 
-        Login.LoginRes loginRes = this.login.login(loginReq);
+        User.LoginRes loginRes = this.login.login(loginReq);
 
         System.out.println(new Gson().toJson(loginRes));
 

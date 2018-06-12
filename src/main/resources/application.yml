@@ -1,5 +1,9 @@
 server:
   port: 8081
+
+multipart.maxFileSize: 10Mb
+multipart.maxRequestSize: 50Mb
+
 spring:
   profiles:
     active: local

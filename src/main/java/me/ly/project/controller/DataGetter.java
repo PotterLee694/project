@@ -15,11 +15,6 @@ import java.util.List;
 
 @RestController
 public interface DataGetter {
-    @PostMapping("/listCourse")
-    ListCourseRes listCourse(@RequestBody ListCourseReq listCourseReq);
-    @PostMapping("/listCourseOfStudent")
-    ListCourseRes listCourseOfStudent(ListCourseReq listCourseReq);
-
     @PostMapping("/listTemplate")
     ListTemplateRes listTemplate(ListTemplateReq listTemplateReq);
 
