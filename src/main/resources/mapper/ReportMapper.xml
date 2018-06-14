@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.ly.project.mapper.ReportMapper">
+
+    <insert id="insert" parameterType="me.ly.project.model.ReportModel">
+        insert into tb_report(
+        <if test="courseId != null">courseId,</if>
+        <if test="templateId != null">templateId,</if>
+        <if test="userId != null">userId,</if>
+        <if test="answer != null">answer,</if>
+        createStamp
+        ) values (
+        <if test="courseId != null">#{courseId},</if>
+        <if test="templateId != null">#{templateId},</if>
+        <if test="userId != null">#{userId},</if>
+        <if test="answer != null">#{answer},</if>
+        now()
+        )
+    </insert>
+    <select id="listReports" resultType="me.ly.project.model.ReportModel">
+        select id, courseId, templateId, userId, answer, createStamp
+        from tb_report
+        <if test="page.searchType != null and page.searchType != '' and page.searchContent != null">
+            where ${page.searchType} like concat('%', #{page.searchContent}, '%')
+        </if>
+        <if test="page.order != null and page.order"> order by ${page.order}</if>
+        <if test="page.desc">desc</if>
+        <if test="page.offset != null and page.pageSize != null">
+            limit #{page.offset}, #{page.pageSize}
+        </if>
+    </select>
+    <select id="queryReport" resultType="me.ly.project.model.ReportModel">
+        select id, courseId, templateId, userId, answer, createStamp
+        from tb_report
+        where id = #{id}
+    </select>
+    <select id="listNeedReport" resultType="me.ly.project.model.CourseModel">
+        select c.id as id, title, courseTime, templateId
+        from tb_course c, tb_like l
+        where c.courseOver = true and l.userId = #{userId} and l.courseId = c.id
+        and (select count(1) from tb_report r where r.userId = #{userId} and r.courseId = c.id) = 0
+        <if test="page.order != null and page.order"> order by c.${page.order}</if>
+        <if test="page.desc">desc</if>
+        <if test="page.offset != null and page.pageSize != null">
+            limit #{page.offset}, #{page.pageSize}
+        </if>
+    </select>
+    <select id="queryReportCount" resultType="java.lang.Integer">
+        select count(1) from tb_report
+        <if test="page.searchType != null and page.searchType != '' and page.searchContent != null">
+            where ${page.searchType} like concat('%', #{page.searchContent}, '%')
+        </if>
+    </select>
+    <select id="queryNeedReportCount" resultType="java.lang.Integer">
+         select count(1)
+         from tb_course c, tb_like l
+         where c.courseOver = true and l.userId = #{userId} and l.courseId = c.id
+         and (select count(1) from tb_report r where r.userId = #{userId} and r.courseId = c.id) = 0
+    </select>
+    <select id="findReport" resultType="me.ly.project.model.ReportModel">
+        select id, courseId, templateId, userId, answer, createStamp
+        from tb_report
+        where userId = #{userId} and courseId = #{courseId}
+    </select>
+
+</mapper>

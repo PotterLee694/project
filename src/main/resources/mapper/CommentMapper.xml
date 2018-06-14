@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.ly.project.mapper.CommentMapper">
+
+    <insert id="insert">
+        insert into tb_comment (
+        <if test="reportId != null">reportId,</if>
+        <if test="userId != null">userId,</if>
+        <if test="comment != null">comment,</if>
+        createStamp
+        ) values (
+        <if test="reportId != null">#{reportId},</if>
+        <if test="userId != null">#{userId},</if>
+        <if test="comment != null">#{comment},</if>
+        now()
+        )
+    </insert>
+    <insert id="addZan">
+        insert into tb_zan (
+        commentId,
+        userId,
+        createStamp
+        ) values (
+        #{commentId},
+        #{userId},
+        now()
+        )
+    </insert>
+    <delete id="delZan">
+        delete from tb_zan where commentId = #{commentId} and userId = #{userId}
+    </delete>
+    <select id="listComment" resultType="me.ly.project.model.CommentModel">
+        select c.id as id, c.reportId as reportId, c.userId as userId, s.score as score, comment, c.createStamp as createStamp, userName, iconUrl
+        from tbl_user as u, tb_score as s, tb_comment as c
+        where c.reportId = #{reportId} and u.id = c.userId and s.reportId = #{reportId} and s.userId = c.userId
+        order by createStamp desc
+    </select>
+    <select id="countZan" resultType="java.lang.Long">
+        select count(1) from tb_zan
+        where commentId = #{commentId}
+    </select>
+</mapper>

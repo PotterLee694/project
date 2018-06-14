@@ -59,5 +59,10 @@
         select count(1) from tb_like
         where userId = #{userId} and courseId = #{courseId}
     </select>
+    <select id="queryLiker" resultType="java.lang.Long">
+        select userId
+        from tb_like
+        where courseId = #{courseId}
+    </select>
 
 </mapper>

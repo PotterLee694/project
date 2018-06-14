@@ -13,6 +13,7 @@ public class CourseModel {
     private String teachers;
     private String courseTime;
     private Boolean courseOver;
+    private Long templateId;
 
     private String infoPdf;
     private String prePdf;

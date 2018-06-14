@@ -21,4 +21,6 @@ public interface CourseMapper {
     int queryCourseCount(@Param("page") Page page);
 
     int update(CourseModel courseModel);
+
+    List<CourseModel> queryOverCourses();
 }

@@ -19,4 +19,6 @@ public interface LikeMapper {
 
     int queryCourseCount(@Param("userId") Long userId, @Param("page") Page page);
 
+    List<Long> queryLiker(@Param("courseId") Long courseId);
+
 }

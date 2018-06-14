@@ -2,11 +2,14 @@ package me.ly.project.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import me.ly.project.controller.Course;
-import me.ly.project.controller.DataGetter;
 import me.ly.project.mapper.CourseMapper;
 import me.ly.project.mapper.LikeMapper;
+import me.ly.project.mapper.NotifyMapper;
+import me.ly.project.mapper.UserMapper;
 import me.ly.project.model.BaseRes;
 import me.ly.project.model.CourseModel;
+import me.ly.project.model.NoticeModel;
+import me.ly.project.model.UserModel;
 import me.ly.project.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,9 +20,13 @@ import java.util.List;
 @Slf4j
 public class CourseImpl implements Course {
     @Autowired
+    private UserMapper userMapper;
+    @Autowired
     private CourseMapper courseMapper;
     @Autowired
     private LikeMapper likeMapper;
+    @Autowired
+    private NotifyMapper notifyMapper;
     @Autowired
     private CourseService courseService;
 
@@ -107,6 +114,15 @@ public class CourseImpl implements Course {
     @Override
     public BaseRes likeCourse(LikeCourseReq likeCourseReq) {
         likeMapper.insert(likeCourseReq.getUserId(), likeCourseReq.getCourseId());
+        CourseModel course = courseMapper.getCourse(likeCourseReq.getCourseId());
+        UserModel userModel = userMapper.queryById(likeCourseReq.getUserId());
+        StringBuffer content = new StringBuffer();
+        content.append(userModel.getUserName())
+               .append("关注了您的课程：")
+               .append(course.getTitle());
+        notifyMapper.insert(new NoticeModel().setUserId(course.getOwner())
+                                             .setType("like")
+                                             .setContent(content.toString()));
 
         return new BaseRes();
     }
@@ -117,7 +133,23 @@ public class CourseImpl implements Course {
         if (count <= 0) {
             return new BaseRes().setSuccess(false);
         }
+        CourseModel course = courseMapper.getCourse(deLikeCourseReq.getCourseId());
+        UserModel userModel = userMapper.queryById(deLikeCourseReq.getUserId());
+        StringBuffer content = new StringBuffer();
+        content.append(userModel.getUserName())
+               .append("退出了您的课程：")
+               .append(course.getTitle());
+        notifyMapper.insert(new NoticeModel().setUserId(course.getOwner())
+                                             .setType("like")
+                                             .setContent(content.toString()));
+
         return new BaseRes();
     }
 
+    @Override
+    public BaseRes mapTemplate(MapTemplateReq mapTemplateReq) {
+        courseMapper.update(new CourseModel().setId(mapTemplateReq.getCourseId())
+                                             .setTemplateId(mapTemplateReq.getTemplateId()));
+        return new BaseRes();
+    }
 }

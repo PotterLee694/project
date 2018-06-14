@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.ly.project.mapper.ScoreMapper">
+
+    <insert id="insert">
+        insert into tb_score (
+        userId,
+        reportId,
+        score ,
+        createStamp
+        ) values (
+        #{userId},
+        #{reportId},
+        #{score},
+        now()
+        )
+    </insert>
+    <update id="update">
+        update tb_score set
+        score = #{score},
+        createStamp = now()
+        where reportId = #{reportId} and userId = #{userId}
+    </update>
+    <select id="getAvgScore" resultType="java.lang.Double">
+        select avg(score) as avgScore from tb_score
+        where reportId = #{reportId}
+        group by reportId
+    </select>
+    <select id="countRecord" resultType="java.lang.Integer">
+        select count(1) from tb_score
+        where userId = #{userId} and reportId = #{reportId}
+    </select>
+    <select id="getScore" resultType="java.lang.Integer">
+        select score from tb_score
+        where userId = #{userId} and reportId = #{reportId}
+    </select>
+
+</mapper>

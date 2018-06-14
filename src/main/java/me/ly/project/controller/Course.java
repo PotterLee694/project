@@ -34,6 +34,9 @@ public interface Course {
     @PostMapping("deLikeCourse")
     BaseRes deLikeCourse(DeLikeCourseReq deLikeCourseReq);
 
+    @PostMapping("/mapTemplate")
+    BaseRes mapTemplate(MapTemplateReq mapTemplateReq);
+
 
 
 
@@ -93,5 +96,10 @@ public interface Course {
     class DeLikeCourseReq {
         private Long userId;
         private Long courseId;
+    }
+    @Data @Accessors(chain = true) @ToString(callSuper = true)
+    class MapTemplateReq {
+        private Long courseId;
+        private Long templateId;
     }
 }

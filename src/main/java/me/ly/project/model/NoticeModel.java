@@ -5,12 +5,11 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-public class TemplateModel {
+public class NoticeModel {
     private Long id;
-    private Long owner;
-    private String title;
-    private String template;
+    private Long userId;
+    private String type;
+    private String content;
+    private String checkTime;
     private String createStamp;
-
-    private String courseMapped;
 }

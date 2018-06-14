@@ -15,6 +15,7 @@
         <if test="infoPdf != null">infoPdf,</if>
         <if test="prePdf != null">prePdf,</if>
         <if test="preVideo != null">preVideo,</if>
+        <if test="templateId != null">templateId,</if>
         createStamp
         ) values (
         <if test="owner!= null">#{owner},</if>
@@ -25,6 +26,7 @@
         <if test="infoPdf != null">#{infoPdf},</if>
         <if test="prePdf != null">#{prePdf},</if>
         <if test="preVideo != null">#{preVideo},</if>
+        <if test="templateId != null">#{templateId},</if>
         now()
         )
     </insert>
@@ -38,16 +40,19 @@
         <if test="courseOver != null">courseOver=#{courseOver},</if>
         <if test="infoPdf != null">infoPdf=#{infoPdf},</if>
         <if test="prePdf != null">prePdf=#{prePdf},</if>
-        <if test="preVideo != null">preVideo=#{preVideo}</if>
+        <if test="preVideo != null">preVideo=#{preVideo},</if>
+        <if test="templateId != null">templateId=#{templateId},</if>
+        actionStamp = now()
         where
         id = #{id}
     </update>
+
     <delete id="delete">
         delete from tb_course
         where id = #{id}
     </delete>
     <select id="queryCourses" resultType="me.ly.project.model.CourseModel" parameterType="me.ly.project.model.Page">
-        select id, owner, title, description, teachers, courseTime, courseOver, infoPdf, prePdf, preVideo
+        select id, owner, title, description, teachers, courseTime, courseOver, infoPdf, prePdf, preVideo, templateId
         from tb_course
         <if test="page.searchType != null and page.searchType != '' and page.searchContent != null">
             where ${page.searchType} like concat('%', #{page.searchContent}, '%')
@@ -66,9 +71,14 @@
         </if>
     </select>
     <select id="getCourse" resultType="me.ly.project.model.CourseModel">
-        select id, owner, title, description, teachers, courseTime, courseOver, infoPdf, prePdf, preVideo
+        select id, owner, title, description, teachers, courseTime, courseOver, infoPdf, prePdf, preVideo, templateId
         from tb_course
         where id = #{id}
+    </select>
+    <select id="queryOverCourses" resultType="me.ly.project.model.CourseModel">
+        select id, owner, title, courseTime, courseOver
+        from tb_course
+        where courseOver = false and courseTime &lt; now()
     </select>
 
 </mapper>
